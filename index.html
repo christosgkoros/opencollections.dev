@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Collections — API Developer Portal</title>
+  <meta name="description" content="Explore Christos Gkoros's public Postman collections. Browse APIs across infrastructure, social media, security, AI agents, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #FF6C37;
+      --orange-hover: #E55A28;
+      --orange-light: #FFF0EB;
+      --bg: #F6F7F9;
+      --surface: #FFFFFF;
+      --border: #E2E5EA;
+      --border-hover: #C8CBD1;
+      --text: #1A1D23;
+      --text-secondary: #5C6270;
+      --text-muted: #9099A8;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+      --radius: 10px;
+      --radius-sm: 6px;
+      --tag-infra: #EEF5FF; --tag-infra-text: #1D6FAA;
+      --tag-social: #F0FDF4; --tag-social-text: #15803D;
+      --tag-ent: #FFF7ED; --tag-ent-text: #C2410C;
+      --tag-auth: #FAF5FF; --tag-auth-text: #6D28D9;
+      --tag-ai: #FFF1F5; --tag-ai-text: #BE185D;
+      --tag-util: #FFFBEB; --tag-util-text: #B45309;
+      --tag-prod: #F0FDFA; --tag-prod-text: #0F766E;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--orange);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .logo-text {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+    .logo-text span { color: var(--orange); }
+    .nav-search {
+      flex: 1;
+      max-width: 380px;
+      margin-left: auto;
+    }
+    .search-wrap {
+      position: relative;
+    }
+    .search-wrap svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    #search {
+      width: 100%;
+      padding: 8px 12px 8px 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: inherit;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    #search:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,108,55,.12); }
+    #search::placeholder { color: var(--text-muted); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1A1D23 0%, #2D3142 100%);
+      color: #fff;
+      padding: 64px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,108,55,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,108,55,.15);
+      border: 1px solid rgba(255,108,55,.3);
+      color: #FF9970;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      max-width: 700px;
+      margin: 0 auto 16px;
+    }
+    .hero h1 span { color: var(--orange); }
+    .hero p {
+      font-size: 16px;
+      color: rgba(255,255,255,.65);
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+    .stat-num span { color: var(--orange); }
+    .stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,.5);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-top: 4px;
+    }
+
+    /* ── FILTERS ── */
+    .filters-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      position: sticky;
+      top: 60px;
+      z-index: 90;
+    }
+    .filters-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .15s;
+      background: #fff;
+      color: var(--text-secondary);
+      user-select: none;
+    }
+    .filter-chip:hover { border-color: var(--orange); color: var(--orange); }
+    .filter-chip.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+    .chip-count {
+      background: rgba(0,0,0,.08);
+      color: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 100px;
+    }
+    .filter-chip.active .chip-count { background: rgba(255,255,255,.25); }
+
+    /* ── MAIN GRID ── */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+    .results-info {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .results-info strong { color: var(--text); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s, border-color .2s, transform .15s;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+    .card-header {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-title-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.2px;
+      line-height: 1.35;
+    }
+    .card-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .card-title a:hover { color: var(--orange); }
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+    }
+    .card-collections {
+      padding: 12px 20px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .collections-heading {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 2px;
+    }
+    .collection-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: border-color .15s, background .15s;
+    }
+    .collection-item:hover { border-color: var(--orange); background: var(--orange-light); }
+    .collection-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .run-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--orange);
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background .15s;
+    }
+    .run-btn:hover { background: var(--orange-hover); }
+    .run-btn svg { flex-shrink: 0; }
+    .workspace-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 11px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all .15s;
+    }
+    .workspace-link:hover { border-color: var(--orange); color: var(--orange); }
+    .no-collections {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 8px 0 4px;
+    }
+
+    /* ── CARD FOOTER ── */
+    .card-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-count {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+    .empty-icon { font-size: 48px; margin-bottom: 16px; }
+    .empty h3 { font-size: 18px; color: var(--text-secondary); margin-bottom: 8px; }
+    .empty p { font-size: 14px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1A1D23;
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+    }
+    footer a { color: var(--orange); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-logo { font-weight: 700; color: #fff; margin-bottom: 8px; font-size: 15px; }
+
+    /* ── HIDDEN ── */
+    .hidden { display: none !important; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 16px 40px; }
+      .hero-stats { gap: 20px; }
+      .filters-bar { padding: 10px 16px; }
+      .main { padding: 24px 16px 48px; }
+      .grid { grid-template-columns: 1fr; gap: 16px; }
+      .nav-inner { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon">🗂️</div>
+      <span class="logo-text">Open<span>Collections</span></span>
+    </a>
+    <div class="nav-search">
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M10 6.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-.88 3.74a5 5 0 1 1 .71-.71l3.07 3.07-.71.71-3.07-3.07Z" fill="currentColor"/></svg>
+        <input type="search" id="search" placeholder="Search workspaces & collections…" autocomplete="off" />
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🚀 Public API Collections</div>
+  <h1>The <span>Open Collections</span><br/>API Developer Portal</h1>
+  <p>Explore curated Postman collections across infrastructure, social media, AI agents, security, and more. Click any collection to run it directly in Postman.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-workspaces">18</div>
+      <div class="stat-label">Workspaces</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-collections">33</div>
+      <div class="stat-label">Collections</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Categories</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num"><span style="font-size:18px">✦</span> Free</div>
+      <div class="stat-label">Always public</div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <div class="filters-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-chip active" data-cat="all">All <span class="chip-count" id="count-all">18</span></button>
+    <button class="filter-chip" data-cat="infrastructure">Infrastructure <span class="chip-count" id="count-infrastructure">3</span></button>
+    <button class="filter-chip" data-cat="social">Social <span class="chip-count" id="count-social">2</span></button>
+    <button class="filter-chip" data-cat="entertainment">Entertainment <span class="chip-count" id="count-entertainment">3</span></button>
+    <button class="filter-chip" data-cat="security">Security &amp; Auth <span class="chip-count" id="count-security">2</span></button>
+    <button class="filter-chip" data-cat="ai">Agentic &amp; AI <span class="chip-count" id="count-ai">3</span></button>
+    <button class="filter-chip" data-cat="productivity">Productivity <span class="chip-count" id="count-productivity">2</span></button>
+    <button class="filter-chip" data-cat="utility">Utility <span class="chip-count" id="count-utility">3</span></button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+  <p class="results-info"><strong id="visible-count">18</strong> workspaces</p>
+  <div class="grid" id="grid"></div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Open Collections</div>
+  <p>Public API collections by <a href="https://www.postman.com/opencollections" target="_blank" rel="noopener">@gkorosc</a> on Postman · Built for developers, by a developer.</p>
+  <p style="margin-top:8px">Questions? Find me on <a href="https://www.postman.com/opencollections" target="_blank" rel="noopener">Postman</a></p>
+</footer>
+
+<script>
+const TEAM = 'opencollections';
+
+function slug(name) {
+  return name.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function workspaceUrl(wsName) {
+  return `https://www.postman.com/${TEAM}/${slug(wsName)}`;
+}
+
+function runUrl(uid) {
+  return `https://app.getpostman.com/run-collection/${uid}`;
+}
+
+const TAG_STYLES = {
+  infrastructure: { bg: 'var(--tag-infra)', color: 'var(--tag-infra-text)', icon: '⚙️', label: 'Infrastructure' },
+  social:         { bg: 'var(--tag-social)', color: 'var(--tag-social-text)', icon: '💬', label: 'Social' },
+  entertainment:  { bg: 'var(--tag-ent)', color: 'var(--tag-ent-text)', icon: '🎵', label: 'Entertainment' },
+  security:       { bg: 'var(--tag-auth)', color: 'var(--tag-auth-text)', icon: '🔐', label: 'Security & Auth' },
+  ai:             { bg: 'var(--tag-ai)', color: 'var(--tag-ai-text)', icon: '🤖', label: 'Agentic & AI' },
+  productivity:   { bg: 'var(--tag-prod)', color: 'var(--tag-prod-text)', icon: '📋', label: 'Productivity' },
+  utility:        { bg: 'var(--tag-util)', color: 'var(--tag-util-text)', icon: '🔧', label: 'Utility' },
+};
+
+const WORKSPACES = [
+  {
+    id: 'ea717bba-8544-4362-a828-da033327c570',
+    name: 'OpenAPI to gRPC — Quarkus',
+    icon: '🔄',
+    category: 'infrastructure',
+    description: 'A workspace including the API and collection for implementing an OpenAPI spec as gRPC using Quarkus.',
+    collections: [],
+  },
+  {
+    id: 'c2e6df24-da0a-4c94-bdcb-94adb011a212',
+    name: 'Dapr API',
+    icon: '🌐',
+    category: 'infrastructure',
+    description: 'Reference collections for the Dapr distributed application runtime API. Source: docs.dapr.io/reference/api/',
+    collections: [
+      { name: 'Dapr API', uid: '6045849-ce93de13-a186-4a2a-b419-1231d4c20e0d' },
+    ],
+  },
+  {
+    id: '883d5848-bfa7-4628-8bc2-5af5aa2cb0ed',
+    name: 'Kubernetes API',
+    icon: '☸️',
+    category: 'infrastructure',
+    description: 'The official Kubernetes API Server REST API, covering all versions from v1.29 through v1.35.',
+    collections: [
+      { name: 'Kubernetes API v1.29', uid: '6045849-58a070f1-2c72-4f9e-9a51-6fc644b1c95d' },
+      { name: 'Kubernetes API v1.30', uid: '6045849-1f1d88ed-29bd-4eee-8880-feb9c9f84a50' },
+      { name: 'Kubernetes API v1.31', uid: '6045849-389bb600-d473-449d-85e1-a11f4b87de79' },
+      { name: 'Kubernetes API v1.32', uid: '6045849-73802104-74e4-4566-b1ac-c59dc0f4f355' },
+      { name: 'Kubernetes API v1.33', uid: '6045849-f247f85f-45b1-4252-a91d-ee6a0922a655' },
+      { name: 'Kubernetes API v1.34', uid: '6045849-a51a17aa-2431-4584-a282-de1d3dab513e' },
+      { name: 'Kubernetes API v1.35', uid: '6045849-72134652-d0a4-4706-b310-96a36a72a9eb' },
+    ],
+  },
+  {
+    id: '7c4684b7-4c78-4695-99f1-6851c95c1463',
+    name: 'Athens Kubernetes Meetup',
+    icon: '🎤',
+    category: 'infrastructure',
+    description: 'Workspace from a talk on using the Kubernetes API & Postman to orchestrate cluster resources based on external conditions.',
+    collections: [
+      { name: 'Kubernetes API',      uid: '6045849-f3c69f7b-ecd3-4722-8162-d00c169f9110' },
+      { name: 'Kubernetes API Demo', uid: '6045849-47e7b931-8a12-4b1c-8a63-1aec3e3e843f' },
+      { name: 'Weather API',         uid: '6045849-c016a43d-8d18-4565-bcda-1d4314d2798c' },
+    ],
+  },
+  {
+    id: '1173303e-d847-4219-9d0d-c6c3362ddabf',
+    name: 'Social Media Flow',
+    icon: '📣',
+    category: 'social',
+    description: 'Postman collections to post and manage content across Twitter/X, Mastodon, LinkedIn, Bluesky, and Threads from one place.',
+    collections: [
+      { name: 'Bluesky API',          uid: '6045849-e303490f-1190-4da8-9b34-080b81f485b6' },
+      { name: 'LinkedIn Content APIs',uid: '6045849-661a02fd-19ec-4459-b2a8-38928941bb44' },
+      { name: 'Mastodon — Post Status',uid: '6045849-8b762d32-5a4d-41c9-80c5-1bb1a4015bf3' },
+      { name: 'OpenAI',               uid: '6045849-52eba9cd-d930-4b78-b969-9e443a004a64' },
+      { name: 'Threads API',          uid: '6045849-fa9543e1-caa3-4747-9514-cd1a00938903' },
+      { name: 'Twitter API v2',       uid: '6045849-841c43d0-5967-42a3-b693-1b91bd600ee4' },
+    ],
+  },
+  {
+    id: 'b9595039-456f-4779-b7fb-13b7e76b3f77',
+    name: 'Google Keep',
+    icon: '📝',
+    category: 'productivity',
+    description: 'Collections and requests for interacting with the Google Keep note-taking API.',
+    collections: [
+      { name: 'Google Keep API', uid: '6045849-a2bf7a62-86ee-4a23-84d5-c05c7c8c2cd2' },
+    ],
+  },
+  {
+    id: '07a25e48-f227-414f-99bd-bfa2407bf444',
+    name: 'Geekbot API',
+    icon: '🤖',
+    category: 'productivity',
+    description: 'Postman collection for Geekbot — the async standup and survey bot for Slack teams. geekbot.com',
+    collections: [
+      { name: 'Geekbot API', uid: '6045849-f2751dfc-d5a4-400a-86e8-68b48d48d7eb' },
+    ],
+  },
+  {
+    id: 'abb28c01-be84-4ff1-a79f-4968a23e77b6',
+    name: 'Spotify API',
+    icon: '🎵',
+    category: 'entertainment',
+    description: 'Unofficial Spotify Web API workspace covering the full REST reference from developer.spotify.com.',
+    collections: [
+      { name: 'Spotify API', uid: '6045849-7d49cd37-a739-4295-a98f-494a53fb0078' },
+    ],
+  },
+  {
+    id: 'ce5e4601-f944-4759-b03f-74598c308157',
+    name: 'Radarr API',
+    icon: '🎬',
+    category: 'entertainment',
+    description: 'Radarr movie management API docs, sourced from radarr.video/docs/api/.',
+    collections: [
+      { name: 'Radarr', uid: '6045849-e8686ec6-e032-42c0-b0ef-59834ace8aa4' },
+    ],
+  },
+  {
+    id: '96bfa815-9da6-49c2-9d86-3ba980ac05ca',
+    name: 'Sonarr API',
+    icon: '📺',
+    category: 'entertainment',
+    description: 'Sonarr TV series management API docs, sourced from sonarr.tv/docs/api/.',
+    collections: [
+      { name: 'Sonarr', uid: '6045849-d4e91ced-502c-4fed-99d0-66688c31e52a' },
+    ],
+  },
+  {
+    id: 'b740d77d-f22d-496f-b16b-d66f131a0a5f',
+    name: 'OAuth 2.0 Authorization Framework',
+    icon: '🔐',
+    category: 'security',
+    description: 'Complete OAuth 2.0 reference collections: RFC 6749 core spec, Dynamic Client Registration (RFC 7591/7592), and OAuth 2.1 draft.',
+    collections: [
+      { name: 'OAuth 2.0 (RFC 6749)',                              uid: '6045849-641c8217-b20c-44be-97c4-1a87bc3f5486' },
+      { name: 'OAuth 2.0 Dynamic Client Registration (RFC 7591/7592)', uid: '6045849-7d3000e1-d2cb-4f49-aed2-6dafa277a1a0' },
+      { name: 'OAuth 2.1 (IETF Draft)',                            uid: '6045849-50e114fb-f5aa-4a8d-bbbf-933724e4ce9f' },
+    ],
+  },
+  {
+    id: '303fa3f0-51ab-4a82-8c53-122fbc5462a3',
+    name: 'MCP Authorization (OAuth)',
+    icon: '🔑',
+    category: 'security',
+    description: 'Authorization flows for the Model Context Protocol based on the MCP specification draft.',
+    collections: [
+      { name: 'MCP Authorization Flow', uid: '6045849-618428d5-f047-4052-8306-bf111991d2b4' },
+    ],
+  },
+  {
+    id: '47abcad3-39fe-435c-9331-b30118e53f65',
+    name: 'Agent Connect Protocol',
+    icon: '🤝',
+    category: 'ai',
+    description: 'Reference collection for the AGNTCY Agent Connect Protocol — a standard for inter-agent communication.',
+    collections: [
+      { name: 'Agent Connect Protocol', uid: '6045849-fbe5fa08-bec8-420d-9baf-e552ef7be81c' },
+    ],
+  },
+  {
+    id: '692af8cc-3d2c-4496-a6ad-3a5b68ee9e87',
+    name: 'Agentic Commerce Protocol',
+    icon: '🛒',
+    category: 'ai',
+    description: 'Collections for the Agentic Commerce Protocol — checkout, webhooks, and delegate payment APIs. agenticcommerce.dev',
+    collections: [
+      { name: 'Agentic Checkout API',                     uid: '6045849-f1df2982-bd93-40c3-98ec-790edbbe33e8' },
+      { name: 'Agentic Checkout Webhooks API',            uid: '6045849-22f3306b-4a16-4ad2-a6d8-d3ddb7531bc3' },
+      { name: 'Agentic Commerce — Delegate Payment API',  uid: '6045849-680ba24b-44ea-46f7-8693-1504a73af9ae' },
+    ],
+  },
+  {
+    id: '6208dfd5-00ce-43de-a652-e8e205b1f194',
+    name: 'Firecrawl API',
+    icon: '🔥',
+    category: 'ai',
+    description: 'Firecrawl API docs for web scraping and crawling at scale, sourced from the official API reference.',
+    collections: [
+      { name: 'Firecrawl API', uid: '6045849-d5490486-fd6e-46ed-9ac4-fd3b4fb33dc7' },
+    ],
+  },
+  {
+    id: '9b429332-61e1-4903-a908-b2a9c6989caa',
+    name: 'QR Code Generator API',
+    icon: '◼',
+    category: 'utility',
+    description: 'QR Code Generator API reference as documented in the official qr-code-generator.com API reference.',
+    collections: [
+      { name: 'QR Code Generator API', uid: '6045849-732bb262-7b3a-4be6-9f8e-f6b6bc163a2f' },
+    ],
+  },
+  {
+    id: '7c0c5cc2-ec3a-451d-ba2e-846d110d8149',
+    name: 'Will It Rain',
+    icon: '🌧️',
+    category: 'utility',
+    description: 'Public workspace for the "Will it rain?" weather-prediction API.',
+    collections: [
+      { name: 'Will it rain API', uid: '6045849-861561a6-dc30-48bc-b39f-1492c5ae44e3' },
+    ],
+  },
+  {
+    id: 'f91134d4-f6ff-4cd1-8fcb-23c3a68bcebf',
+    name: 'Classter API',
+    icon: '🎓',
+    category: 'utility',
+    description: 'API for the Classter student information and school management platform.',
+    collections: [
+      { name: 'Classter Consumer API', uid: '6045849-7b7dadb4-8305-47f7-8a1b-1c60f2f6e6f3' },
+    ],
+  },
+];
+
+const playIcon = `<svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M2 1.5l6 3.5-6 3.5V1.5z"/></svg>`;
+const extIcon = `<svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1h3v3M10 1L5.5 5.5M4.5 2H2a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.5"/></svg>`;
+
+function buildCard(ws) {
+  const tag = TAG_STYLES[ws.category];
+  const colCount = ws.collections.length;
+  const collectionsHTML = colCount === 0
+    ? `<p class="no-collections">No collections yet — view workspace for details.</p>`
+    : ws.collections.map(c => `
+        <div class="collection-item">
+          <span class="collection-name" title="${c.name}">${c.name}</span>
+          <a class="run-btn" href="${runUrl(c.uid)}" target="_blank" rel="noopener">
+            ${playIcon} Run
+          </a>
+        </div>`).join('');
+
+  return `
+    <div class="card" data-cat="${ws.category}" data-name="${ws.name.toLowerCase()} ${ws.collections.map(c=>c.name.toLowerCase()).join(' ')}">
+      <div class="card-header">
+        <div class="card-title-row">
+          <div class="card-icon" style="background:${tag.bg};color:${tag.color}">${ws.icon}</div>
+          <div>
+            <div class="card-title">
+              <a href="${workspaceUrl(ws.name)}" target="_blank" rel="noopener">${ws.name}</a>
+            </div>
+          </div>
+        </div>
+        <p class="card-desc">${ws.description}</p>
+        <div class="card-meta">
+          <span class="tag" style="background:${tag.bg};color:${tag.color}">${tag.icon} ${tag.label}</span>
+        </div>
+      </div>
+      <div class="card-collections">
+        ${colCount > 0 ? `<div class="collections-heading">${colCount} Collection${colCount>1?'s':''}</div>` : ''}
+        ${collectionsHTML}
+      </div>
+      <div class="card-footer">
+        <span class="footer-count">${colCount > 0 ? colCount + ' collection' + (colCount>1?'s':'') : 'Workspace only'}</span>
+        <a class="workspace-link" href="${workspaceUrl(ws.name)}" target="_blank" rel="noopener">
+          ${extIcon} View workspace
+        </a>
+      </div>
+    </div>`;
+}
+
+const grid = document.getElementById('grid');
+grid.innerHTML = WORKSPACES.map(buildCard).join('');
+
+// Update stats
+document.getElementById('stat-workspaces').textContent = WORKSPACES.length;
+document.getElementById('stat-collections').textContent = WORKSPACES.reduce((s,w) => s + w.collections.length, 0);
+document.getElementById('count-all').textContent = WORKSPACES.length;
+Object.keys(TAG_STYLES).forEach(cat => {
+  const el = document.getElementById('count-' + cat);
+  if (el) el.textContent = WORKSPACES.filter(w => w.category === cat).length;
+});
+
+// Filter + search
+let activeCategory = 'all';
+let searchTerm = '';
+
+function applyFilters() {
+  const cards = grid.querySelectorAll('.card');
+  let visible = 0;
+  cards.forEach(card => {
+    const catMatch = activeCategory === 'all' || card.dataset.cat === activeCategory;
+    const searchMatch = !searchTerm || card.dataset.name.includes(searchTerm);
+    if (catMatch && searchMatch) { card.classList.remove('hidden'); visible++; }
+    else card.classList.add('hidden');
+  });
+  document.getElementById('visible-count').textContent = visible;
+
+  // Empty state
+  let empty = grid.querySelector('.empty');
+  if (visible === 0) {
+    if (!empty) {
+      empty = document.createElement('div');
+      empty.className = 'empty';
+      empty.innerHTML = `<div class="empty-icon">🔍</div><h3>No results found</h3><p>Try a different search term or category filter.</p>`;
+      grid.appendChild(empty);
+    }
+  } else if (empty) {
+    empty.remove();
+  }
+}
+
+document.querySelectorAll('.filter-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    activeCategory = chip.dataset.cat;
+    applyFilters();
+  });
+});
+
+document.getElementById('search').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  applyFilters();
+});
+</script>
+</body>
+</html>
