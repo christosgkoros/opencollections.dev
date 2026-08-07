@@ -1,0 +1,41 @@
+name: Sync from Postman
+
+# Manual only, by design. Run this after adding or changing collections in Postman.
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Report changes without committing'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Sync index.html with Postman
+        env:
+          POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+        run: node scripts/sync.mjs ${{ inputs.dry-run && '--dry-run' || '' }}
+
+      - name: Commit and push
+        if: ${{ !inputs.dry-run }}
+        run: |
+          if git diff --quiet; then
+            echo "No changes — nothing to commit."
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Sync collections from Postman'
+          git push
