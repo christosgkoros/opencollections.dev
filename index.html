@@ -526,11 +526,11 @@
   </a>
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-num" id="stat-workspaces">16</div>
+      <div class="stat-num" id="stat-workspaces">17</div>
       <div class="stat-label">Workspaces</div>
     </div>
     <div class="stat">
-      <div class="stat-num" id="stat-collections">32</div>
+      <div class="stat-num" id="stat-collections">33</div>
       <div class="stat-label">Collections</div>
     </div>
     <div class="stat">
@@ -548,8 +548,8 @@
 <div class="filters-bar">
   <div class="filters-inner">
     <span class="filter-label">Filter:</span>
-    <button class="filter-chip active" data-cat="all">All <span class="chip-count" id="count-all">16</span></button>
-    <button class="filter-chip" data-cat="infrastructure">Infrastructure <span class="chip-count" id="count-infrastructure">2</span></button>
+    <button class="filter-chip active" data-cat="all">All <span class="chip-count" id="count-all">17</span></button>
+    <button class="filter-chip" data-cat="infrastructure">Infrastructure <span class="chip-count" id="count-infrastructure">3</span></button>
     <button class="filter-chip" data-cat="social">Social <span class="chip-count" id="count-social">1</span></button>
     <button class="filter-chip" data-cat="entertainment">Entertainment <span class="chip-count" id="count-entertainment">3</span></button>
     <button class="filter-chip" data-cat="security">Security &amp; Auth <span class="chip-count" id="count-security">2</span></button>
@@ -561,7 +561,7 @@
 
 <!-- MAIN -->
 <main class="main">
-  <p class="results-info"><strong id="visible-count">16</strong> workspaces</p>
+  <p class="results-info"><strong id="visible-count">17</strong> workspaces</p>
   <div class="grid" id="grid"></div>
 </main>
 
@@ -630,6 +630,16 @@ const WORKSPACES = [
       { name: 'Kubernetes API v1.34', uid: '6045849-a51a17aa-2431-4584-a282-de1d3dab513e' },
       { name: 'Kubernetes API v1.35', uid: '6045849-72134652-d0a4-4706-b310-96a36a72a9eb' },
       { name: 'Kubernetes API v1.36', uid: '6045849-e38ebf9d-9b6e-436b-be18-194ef2a2444f' },
+    ],
+  },
+  {
+    id: '8079a6b5-a638-463f-9244-79b44051620c',
+    name: 'lakeFS API',
+    icon: '🌊',
+    category: 'infrastructure',
+    description: 'Git for your data lake: branch, commit and merge object storage with the lakeFS HTTP API (v1.88.0). Source: github.com/treeverse/lakeFS',
+    collections: [
+      { name: 'lakeFS API', uid: '6045849-9665ccfd-8696-419a-958a-3198f00956ac' },
     ],
   },
   {
